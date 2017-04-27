@@ -77,6 +77,7 @@ class Client:
         kwargs_all.update(sse_request_input)
 
         response = conduct_request.get(self.dcos_mode, self.host, self.url, stream=True, **kwargs_all)
+        print('DEBUG: events response header: {}'.format(response.headers))
         response.raise_for_status()
         self.responseIter = response.iter_content(decode_unicode=True)
 
@@ -87,6 +88,7 @@ class Client:
         buf = ''
         while not is_event_complete(buf):
             next_char = next(self.responseIter)
+            print('DEBUG: events next_car: {}'.format(next_char))
             buf += next_char
 
         split = re.split(SSE_END_OF_FIELD, buf)

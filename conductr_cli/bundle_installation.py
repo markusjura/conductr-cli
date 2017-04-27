@@ -46,6 +46,7 @@ def wait_for_condition(bundle_id, condition, condition_name, args):
         sse_events = sse_client.get_events(args.dcos_mode, conduct_url.conductr_host(args), bundle_events_url,
                                            auth=args.conductr_auth, verify=args.server_verification_file)
         for event in sse_events:
+            print('DEBUG: event: {} {}'.format(event.event, event.data))
             sse_heartbeat_count_after_event += 1
 
             elapsed = (datetime.now() - start_time).total_seconds()
